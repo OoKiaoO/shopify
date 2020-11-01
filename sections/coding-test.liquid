@@ -1,0 +1,27 @@
+{% assign handle = section.settings.featured %}
+{% assign collection = collections[handle] %}
+  
+{{ collection.title }}
+  
+{% for product in collection.products %}
+    <a href="{{ product.url | within: collection }}">{{ product.title }}</a>
+    {{ product.price | money }}
+    {% unless product.available %}<br><strong>sold out</strong>{% endunless %}
+    <a href="{{ product.url | within: collection }}">
+      <img src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}">
+    </a>
+{% endfor %}
+
+{% schema %}
+  {
+    "name": "Coding Test",
+    "settings": [
+                 {
+                   "type":      "collection",
+                   "id":        "featured",
+                   "label":     "Featured Collection",
+                   "info":      "Text"
+                 }
+                ]
+  }
+{% endschema %}
